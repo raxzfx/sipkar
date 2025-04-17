@@ -31,9 +31,9 @@ class AuthController extends Controller
             
             return match($user->jabatan) {
                 'admin'  => redirect()->route('admin.index'),
-                'karyawan'  => redirect()->route('operator.dashboard'),
-                'tim penilai' => redirect()->route('pelaksana.index'),
-                'kepsek'  => redirect()->route('direktur.index'),
+                'karyawan'  => redirect()->route('karyawan.index'),
+                'tim penilai' => redirect()->route('tim.index'),
+                'kepsek'  => redirect()->route('kepsek.index'),
                 default     => redirect('/'),
             };
         }

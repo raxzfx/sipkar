@@ -17,6 +17,7 @@ return new class extends Migration
             $table->text('aktivitas');
             $table->text('keterangan');
             $table->foreignId('user_id')->references('id_user')->on('user')->onDelete('cascade');
+            $table->enum('status', ['proses', 'selesai', ])->default('proses');
             $table->timestamps();
         });
     }

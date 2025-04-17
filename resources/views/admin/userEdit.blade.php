@@ -1,5 +1,5 @@
 @extends('templateAdmin')
-@section('title', 'Add User')
+@section('title', 'Edit User')
 @section('content')
 
 <div class="container-xxl flex-grow-1 container-p-y">
@@ -18,8 +18,9 @@
             <h5 class="mb-0">Add User</h5>
           </div>
           <div class="card-body">
-            <form action="{{route('admin.userStore')}}" method="POST">
+            <form action="{{route('admin.userUpdate', $users->id_user)}}" method="POST">
               @csrf
+              @method('PUT')
               <div class="mb-3">
                 <label class="form-label" for="basic-icon-default-fullname">Nama Lengkap</label>
                 <div class="input-group input-group-merge">
@@ -35,6 +36,7 @@
                     aria-label="John Doe"
                     aria-describedby="basic-icon-default-fullname2"
                     required
+                    value="{{$users->nama_lengkap}}"
                   />
                 </div>
               </div>
@@ -52,6 +54,7 @@
                     placeholder="masukan nip anda"
                     aria-label="masukan nip anda"
                     aria-describedby="basic-icon-default-company2"
+                    value="{{$users->nip}}"
                     required
                   />
                 </div>
@@ -67,6 +70,7 @@
                     placeholder="john.doe"
                     name="email"
                     aria-label="john.doe"
+                    value="{{$users->email}}"
                     aria-describedby="basic-icon-default-email2"
                     required
                   />
@@ -85,6 +89,7 @@
                     id="basic-icon-default-phone"
                     class="form-control phone-mask"
                     name="no_telp"
+                    value="{{$users->no_telp}}"
                     placeholder="0896 7777 8888"
                     aria-label="0896 7777 8888"
                     aria-describedby="basic-icon-default-phone2"
@@ -104,13 +109,17 @@
                     name="jabatan"
                     aria-describedby="basic-icon-default-message2"
                   >
-                    <option selected disabled> Pilih Jabatan </option>
+                    <option selected disabled>Pilih Jabatan</option>
                     @foreach ($jabatans as $jab)
-                          <option value="{{$jab}}">{{$jab}}</option>
+                      <option value="{{ $jab }}" 
+                        @if ($jab == old('jabatan', $users->jabatan)) selected @endif>
+                        {{ $jab }}
+                      </option>
                     @endforeach
                   </select>
                 </div>
               </div>
+              
 
               <div class="mb-5 form-password-toggle">
                 <label class="form-label" for="password">Password</label>
@@ -121,6 +130,7 @@
                     id="password"
                     class="form-control"
                     name="password"
+                    value="{{$users->password}}"
                     placeholder="Masukkan password"
                     aria-describedby="password"
                   />

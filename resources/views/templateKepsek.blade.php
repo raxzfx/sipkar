@@ -142,67 +142,26 @@
           <ul class="menu-inner py-1">
             <!-- Dashboard -->
             <li class="menu-item ">
-              <a href="{{route('admin.index')}}" class="menu-link">
+              <a href="{{route('tim.index')}}" class="menu-link">
                 <i class="menu-icon tf-icons bx bx-home-circle"></i>
                 <div data-i18n="Analytics">Dashboard</div>
               </a>
             </li>
 
-            <li class="menu-header small text-uppercase">
-              <span class="menu-header-text">Data Master</span>
-            </li>
-            <li class="menu-item">
-              <a href="javascript:void(0);" class="menu-link menu-toggle">
-                <i class="menu-icon tf-icons 	bx bx-collection"></i>
-                <div data-i18n="Account Settings">Data Master</div>
-              </a>
-              <ul class="menu-sub">
-                <li class="menu-item">
-                  <a href="{{route('admin.userTable')}}" class="menu-link">
-                    <div data-i18n="Account">User</div>
-                  </a>
-                </li>
-                <li class="menu-item">
-                  <a href="{{route('admin.divisiTable')}}" class="menu-link">
-                    <div data-i18n="Notifications">Divisi</div>
-                  </a>
-                </li>
-              
-                <li class="menu-item">
-                  <a href="{{route('admin.kategoriTable')}}" class="menu-link">
-                    <div data-i18n="Connections">Kategori</div>
-                  </a>
-                </li>
-              </ul>
-            </li>
+        
        
-            <li class="menu-header small text-uppercase"><span class="menu-header-text">Karyawan</span></li>
-            <li class="menu-item">
-              <a href="{{route('admin.karyawanTable')}}" class="menu-link">
-                <i class="menu-icon tf-icons 	bx bx-user"></i>
-                <div data-i18n="Basic">Karyawan</div>
-              </a>
-            </li>
           
             <!-- Components -->
             <li class="menu-header small text-uppercase"><span class="menu-header-text">Other</span></li>
-            <!-- Cards -->
             <li class="menu-item">
-              <a href="{{route('admin.pelaporanTable')}}" class="menu-link">
-                <i class="menu-icon tf-icons 	bx bx-task"></i>
-                <div data-i18n="Basic">Pelaporan kinerja</div>
-              </a>
-            </li>
-
-            <li class="menu-item">
-              <a href="{{route('admin.penilaianTable')}}" class="menu-link">
+              <a href="{{route('tim.penilaianTable')}}" class="menu-link">
                 <i class="menu-icon tf-icons bx bx-clipboard"></i>
                 <div data-i18n="Boxicons">Penilaian Karyawan</div>
               </a>
             </li>
 
             <li class="menu-item">
-              <a href="{{route('admin.rekapData')}}" class="menu-link">
+              <a href="{{route('tim.rekapData')}}" class="menu-link">
                 <i class="menu-icon tf-icons 	bx bx-archive"></i>
                 <div data-i18n="Boxicons">Rekap Data Penilaian</div>
               </a>
@@ -260,7 +219,7 @@
                           </div>
                           <div class="flex-grow-1">
                             <span class="fw-semibold d-block">{{ Auth::user()->nama_lengkap }}</span>
-                            <small class="text-muted">Admin</small>
+                            <small class="text-muted">Tim Penilaian</small>
                           </div>
                         </div>
                       </a>

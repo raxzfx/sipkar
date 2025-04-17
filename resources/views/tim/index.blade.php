@@ -1,5 +1,5 @@
-@extends('templateAdmin')
-@section('title', 'Dashboard Admin')
+@extends('templateTim')
+@section('title', 'Dashboard Tim penilai')
 @section('content')
 
 <div class="container-xxl flex-grow-1 container-p-y">

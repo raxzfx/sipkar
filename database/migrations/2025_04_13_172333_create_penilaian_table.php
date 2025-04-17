@@ -15,7 +15,7 @@ return new class extends Migration
             $table->id('id_nilai');
             $table->foreignId('karyawan')->references('id_user')->on('user')->onDelete('cascade');
             $table->foreignId('kategori_id')->references('id_kategori_penilaian')->on('kategori_penilaian')->onDelete('cascade');
-            $table->foreignId('tim_penilai')->references('id_user')->on('user')->onDelete('cascade');
+            $table->foreignId('user_id')->references('id_user')->on('user')->onDelete('cascade');
             $table->integer('skor');
             $table->date('tanggal_penilaian');
             $table->timestamps();
