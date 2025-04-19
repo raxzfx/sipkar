@@ -18,7 +18,7 @@
             <h5 class="mb-0">Add Divisi</h5>
           </div>
           <div class="card-body">
-            <form action="{{route('admin.pelaporanUpdate', $pelaporan->id_pelaporan)}}" method="POST">
+            <form action="{{route('admin.pelaporanUpdate', $pelaporan->id_pelaporan)}}" method="POST"  enctype="multipart/form-data">
                 @csrf
                 @method('PUT')
               
@@ -66,6 +66,15 @@
                     />
                   </div>
                 </div>
+
+                     <!-- Lampiran File -->
+                     <div class="mb-3">
+                      <label class="form-label" for="file">Lampiran (Jika Ada)</label>
+                      <input type="file" name="file" class="form-control">
+                      @if($pelaporan->file)
+                          <small class="form-text text-muted">Lampiran saat ini: <a href="{{ asset('uploads/pelaporan/' . $pelaporan->file) }}" target="_blank">Lihat File</a></small>
+                      @endif
+                  </div>
               
                 <button type="submit" class="btn btn-primary">Update</button>
               </form>

@@ -7,7 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 class Histori extends Model
 {
     protected $table = 'histori';
-    protected $fillable = ['pelaporan_id', 'status', 'nilai_akhir', 'komentar','user_id'];
+    protected $fillable = ['pelaporan_id', 'status', 'nilai_akhir', 'komentar','user_id','aktivitas'];
 
     public function pelaporan()
     {

@@ -72,6 +72,12 @@
                   />
                 </div>
               </div>
+
+              <div class="mb-3">
+                <label class="form-label" for="formFile">Lampiran File</label>
+                <input class="form-control" type="file" name="file" id="formFile" />
+                <small class="text-muted">Format: PDF, DOCX, JPG, PNG, dll.</small>
+              </div>
               
               <button type="submit" class="btn btn-primary">Send</button>
             </form>

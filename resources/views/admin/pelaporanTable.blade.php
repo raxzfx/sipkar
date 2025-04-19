@@ -71,7 +71,11 @@
             </td>
 
             <td>
+              @if ($laporan->status === 'pending')
+                nilai belum ada
+              @else
               {{$laporan->nilai_akhir ?? 'nilai belum ada'}}
+              @endif
             </td>
 
             <td>
@@ -202,7 +206,7 @@
           <tr>
             <td>{{ ($historiPelaporans->currentPage() - 1) * $historiPelaporans->perPage() + $loop->iteration }}</td>
             <td>{{ $histori->user->nama_lengkap ?? '-' }}</td>
-            <td>{{ $histori->pelaporan->aktivitas ?? '-' }}</td>
+            <td>{{ $histori->aktivitas ?? '-' }}</td>
             <td>
               @if ($histori->status === 'revisi')
                 <span class="badge bg-info text-dark">Revisi</span>

@@ -97,19 +97,44 @@ $kodeUnik = 'SPKR' . str_pad($jumlahPelaporan, 3, '0', STR_PAD_LEFT);
             'tanggal_pelaporan' => 'required|date',
             'aktivitas' => 'required|string',
             'keterangan' => 'required|string',
-            'status' => 'required|in:proses,selesai',
+            'file' => 'nullable|mimes:pdf,doc,docx,xls,xlsx,jpg,jpeg,png|max:5120', // max 5MB
         ]);
-
+        
         $pelaporan = Pelaporan::findOrFail($id);
+        
+        // Menangani file baru jika ada
+        $fileName = $pelaporan->file; // Ambil nama file lama
+        
+        if ($request->hasFile('file')) {
+            // Hapus file lama jika ada
+            if ($fileName) {
+                $oldFilePath = public_path('uploads/pelaporan/' . $fileName);
+                if (file_exists($oldFilePath)) {
+                    unlink($oldFilePath); // Hapus file lama
+                }
+            }
+        
+            // Proses unggahan file baru
+            $file = $request->file('file');
+            $fileName = time() . '_' . $file->getClientOriginalName();
+            $file->move(public_path('uploads/pelaporan'), $fileName); // Simpan file baru
+        
+            // Ubah status menjadi "pending" setelah revisi dan update lampiran
+            $pelaporan->status = 'pending';
+        }
+        
+        // Update data pelaporan dengan file baru atau lama
         $pelaporan->update([
             'tanggal_pelaporan' => $request->tanggal_pelaporan,
             'aktivitas' => $request->aktivitas,
             'keterangan' => $request->keterangan,
-            'status' => $request->status,
+            'file' => $fileName, // Gunakan file baru atau file lama
         ]);
-
+        
         return redirect()->route('admin.pelaporanTable')->with('success', 'Pelaporan berhasil diupdate');
     }
+    
+    
 
     public function destroy(string $id)
     {
@@ -118,58 +143,65 @@ $kodeUnik = 'SPKR' . str_pad($jumlahPelaporan, 3, '0', STR_PAD_LEFT);
 
         return redirect()->route('admin.pelaporanTable')->with('success', 'Pelaporan berhasil dihapus');
     }
-    public function updateStatus(Request $request, $id)
-    {
-        $request->validate([
-            'nilai' => 'required|array',
-            'nilai.*' => 'required|numeric|min:0|max:100',
-            'komentar' => 'nullable|string',
-        ]);
-    
-        $laporan = Pelaporan::findOrFail($id);
-    
-        $nilaiArrayOriginal = $request->nilai;
-    
-        // Ubah menjadi array numerik 0,1,2 dst
-        $nilaiArray = array_values($nilaiArrayOriginal);
-    
-        // Hitung rata-rata
-        $jumlahKategori = count($nilaiArray);
-        $totalNilai = array_sum($nilaiArray);
-        $rataRata = $jumlahKategori > 0 ? round($totalNilai / $jumlahKategori, 2) : null;
-    
-        // Tentukan status otomatis
-        if ($rataRata >= 75 && $rataRata <= 100) {
-            $status = 'selesai';
-        } elseif ($rataRata >= 51 && $rataRata < 75) {
-            $status = 'revisi';
-        } else {
-            $status = 'ditolak';
-        }
 
-        // dd($nilaiArray);
-
-        Histori::create([
-            'pelaporan_id' => $laporan->id_pelaporan,
-            'status' => $status,
-            'nilai_akhir' => $rataRata,
-            'komentar' => $request->komentar,
-        ]);
+   public function updateStatus(Request $request, $id)
+{
+    $request->validate([
+        'nilai' => 'required|array',
+        'nilai.*' => 'required|numeric|min:0|max:100',
+        'komentar' => 'nullable|string',
+    ]);
     
-        // Simpan ke database
-        $laporan->update([
-            'status' => $status,
-            'komentar' => $request->komentar,
-            'nilai_akhir' => $rataRata,
-            'nilai_1' => isset($nilaiArray[0]) ? (int) $nilaiArray[0] : null,
-    'nilai_2' => isset($nilaiArray[1]) ? (int) $nilaiArray[1] : null,
-    'nilai_3' => isset($nilaiArray[2]) ? (int) $nilaiArray[2] : null,
-        ]);
+    $laporan = Pelaporan::findOrFail($id);
+    $oldAktivitas = $laporan->aktivitas;
     
-        return redirect()->back()->with('success', 'Nilai berhasil disimpan.');
+    $nilaiArrayOriginal = $request->nilai;
+    
+    // Ubah menjadi array numerik 0,1,2 dst
+    $nilaiArray = array_values($nilaiArrayOriginal);
+    
+    // Hitung rata-rata
+    $jumlahKategori = count($nilaiArray);
+    $totalNilai = array_sum($nilaiArray);
+    $rataRata = $jumlahKategori > 0 ? round($totalNilai / $jumlahKategori, 2) : null;
+    
+    // Tentukan status otomatis
+    if ($rataRata >= 75 && $rataRata <= 100) {
+        $status = 'selesai';
+    } elseif ($rataRata >= 51 && $rataRata < 75) {
+        $status = 'revisi';
+    } else {
+        $status = 'ditolak';
     }
     
+    // Simpan histori
+    Histori::create([
+        'user_id'      => $laporan->user_id,
+        'pelaporan_id' => $laporan->id_pelaporan,
+        'aktivitas'    => $oldAktivitas,
+      
+        'status'       => $status,
+        'nilai_akhir'  => $rataRata,
+        'komentar'     => $request->komentar,
+    ]);
     
+    // Ubah status menjadi pending jika revisi atau pembaruan status
+    if ($status === 'revisi') {
+        $laporan->status = 'pending';
+    }
     
+    // Simpan status akhir dan nilai
+    $laporan->update([
+        'status' => $status,
+        'komentar' => $request->komentar,
+        'nilai_akhir' => $rataRata,
+        'nilai_1' => isset($nilaiArray[0]) ? (int) $nilaiArray[0] : null,
+        'nilai_2' => isset($nilaiArray[1]) ? (int) $nilaiArray[1] : null,
+        'nilai_3' => isset($nilaiArray[2]) ? (int) $nilaiArray[2] : null,
+    ]);
+    
+    return redirect()->back()->with('success', 'Nilai berhasil disimpan.');
+}
+
 
 }

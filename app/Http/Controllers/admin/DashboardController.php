@@ -16,7 +16,9 @@ class DashboardController extends Controller
     {
         $karyawans = Karyawan::count();
         $pelaporans = Pelaporan::where('status','pending')->count();
-        return view('admin.index', compact('karyawans', 'pelaporans'));
+        $pelaporanr = Pelaporan::where('status','revisi')->count();
+        $pelaporand = Pelaporan::where('status','selesai')->count();
+        return view('admin.index', compact('karyawans', 'pelaporans', 'pelaporanr', 'pelaporand'));
     }
 
     /**

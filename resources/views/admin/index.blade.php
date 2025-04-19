@@ -49,8 +49,8 @@
                 <i class="icon-base bx bx-dots-vertical-rounded text-body-secondary"></i>
               </button>
               <div class="dropdown-menu dropdown-menu-end">
-                <a class="dropdown-item" href="#">View More</a>
-                <a class="dropdown-item" href="#">Delete</a>
+                <a class="dropdown-item" href="{{route('admin.userTable')}}">View More</a>
+             
               </div>
             </div>
           </div>
@@ -75,12 +75,12 @@
                 <i class="icon-base bx bx-dots-vertical-rounded text-body-secondary"></i>
               </button>
               <div class="dropdown-menu">
-                <a class="dropdown-item" href="#">View More</a>
-                <a class="dropdown-item" href="#">Delete</a>
+                <a class="dropdown-item" href="{{route('admin.pelaporanTable')}}">View More</a>
+             
               </div>
             </div>
           </div>
-          <p class="mb-1">pelaporan kinerja</p>
+          <p class="mb-1">pelaporan kinerja - pending</p>
           <h4 class="card-title mb-3">{{ $pelaporans }}</h4>
 
         </div>
@@ -93,20 +93,20 @@
         <div class="card-body">
           <div class="card-title d-flex align-items-start justify-content-between mb-4">
             <div class="avatar flex-shrink-0">
-              <img src="../assets/img/icons/unicons/paypal.png" alt="paypal" class="rounded" />
+              <i class="bx bx-spreadsheet bx-sm text-primary"></i>
             </div>
             <div class="dropdown">
               <button class="btn p-0" type="button" id="cardOpt3" data-bs-toggle="dropdown">
                 <i class="icon-base bx bx-dots-vertical-rounded text-body-secondary"></i>
               </button>
               <div class="dropdown-menu dropdown-menu-end">
-                <a class="dropdown-item" href="#">View More</a>
-                <a class="dropdown-item" href="#">Delete</a>
+                <a class="dropdown-item" href="{{route('admin.pelaporanTable')}}">View More</a>
+             
               </div>
             </div>
           </div>
-          <p class="mb-1">Payments</p>
-          <h4 class="card-title mb-3">$3,190</h4>
+          <p class="mb-1">Pelaporan kinerja - Revisi</p>
+          <h4 class="card-title mb-3">{{$pelaporanr}}</h4>
          
         </div>
       </div>
@@ -118,20 +118,20 @@
         <div class="card-body">
           <div class="card-title d-flex align-items-start justify-content-between mb-4">
             <div class="avatar flex-shrink-0">
-              <img src="../assets/img/icons/unicons/cc-primary.png" alt="Credit Card" class="rounded" />
+              <i class="bx bx-spreadsheet bx-sm text-primary"></i>
             </div>
             <div class="dropdown">
               <button class="btn p-0" type="button" id="cardOpt4" data-bs-toggle="dropdown">
                 <i class="icon-base bx bx-dots-vertical-rounded text-body-secondary"></i>
               </button>
               <div class="dropdown-menu">
-                <a class="dropdown-item" href="#">View More</a>
-                <a class="dropdown-item" href="#">Delete</a>
+                <a class="dropdown-item" href="{{route('admin.pelaporanTable')}}">View More</a>
+             
               </div>
             </div>
           </div>
-          <p class="mb-1">Transactions</p>
-          <h4 class="card-title mb-3">$8,032</h4>
+          <p class="mb-1">Pelaporan kinerja - Selesai</p>
+          <h4 class="card-title mb-3">{{$pelaporand}}</h4>
         </div>
       </div>
     </div>
