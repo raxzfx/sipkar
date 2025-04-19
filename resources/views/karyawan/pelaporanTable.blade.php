@@ -29,14 +29,20 @@
             <td>{{ $laporan->keterangan }}</td>
             <td>{{ $laporan->tanggal_pelaporan }}</td>
             <td>
-                @if ($laporan->status === 'proses')
-                    <span class="badge bg-label-warning me-1">{{ $laporan->status }}</span>
-                @else
-                    <span class="badge bg-label-success me-1">{{ $laporan->status }}</span>
-                @endif
+              @if ($laporan->status === 'pending')
+                <span class="badge bg-warning text-dark">Pending</span>
+              @elseif ($laporan->status === 'selesai')
+                <span class="badge bg-success">Selesai</span>
+              @elseif ($laporan->status === 'revisi')
+                <span class="badge bg-info text-dark">Revisi</span>
+              @elseif ($laporan->status === 'ditolak')
+                <span class="badge bg-danger">Ditolak</span>
+              @else
+                <span class="badge bg-secondary">{{ ucfirst($laporan->status) }}</span>
+              @endif
             </td>
             <td>
-                @if($laporan->status === 'proses')
+                @if($laporan->status === 'pending')
                 <div class="dropdown">
                   <button type="button" class="btn p-0 dropdown-toggle hide-arrow" data-bs-toggle="dropdown">
                       <i class="icon-base bx bx-dots-vertical-rounded"></i>

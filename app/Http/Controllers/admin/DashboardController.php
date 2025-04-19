@@ -3,6 +3,8 @@
 namespace App\Http\Controllers\admin;
 
 use App\Http\Controllers\Controller;
+use App\Models\Karyawan;
+use App\Models\Pelaporan;
 use Illuminate\Http\Request;
 
 class DashboardController extends Controller
@@ -12,7 +14,9 @@ class DashboardController extends Controller
      */
     public function index()
     {
-        return view('admin.index');
+        $karyawans = Karyawan::count();
+        $pelaporans = Pelaporan::where('status','pending')->count();
+        return view('admin.index', compact('karyawans', 'pelaporans'));
     }
 
     /**

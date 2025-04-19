@@ -13,11 +13,18 @@ return new class extends Migration
     {
         Schema::create('pelaporan', function (Blueprint $table) {
             $table->id('id_pelaporan');
+            $table->string('kode_unik');
             $table->date('tanggal_pelaporan');
             $table->text('aktivitas');
             $table->text('keterangan');
             $table->foreignId('user_id')->references('id_user')->on('user')->onDelete('cascade');
-            $table->enum('status', ['proses', 'selesai', ])->default('proses');
+            $table->enum('status', ['pending', 'selesai', 'revisi', 'ditolak' ])->default('pending');
+            $table->string('file')->nullable(); 
+            $table->string('komentar')->nullable();
+            $table->decimal('nilai_akhir', 5, 2)->nullable();
+            $table->integer('nilai_1')->nullable();
+            $table->integer('nilai_2')->nullable();
+            $table->integer('nilai_3')->nullable();
             $table->timestamps();
         });
     }

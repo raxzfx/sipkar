@@ -18,14 +18,14 @@
             <h5 class="mb-0">Add Pelaporan</h5>
           </div>
           <div class="card-body">
-            <form action="{{route('admin.pelaporanStore')}}" method="POST">
+            <form action="{{route('admin.pelaporanStore')}}" method="POST" enctype="multipart/form-data">
               @csrf
 
               <div class="mb-3">
                 <label class="form-label" for="divisi">Nama Karyawan</label>
                 <div class="input-group input-group-merge">
                   <span class="input-group-text"><i class="bx bx-user"></i></span>
-                  <select name="karyawan" id="divisi" class="form-control" required>
+                  <select name="user_id" id="divisi" class="form-control" required>
                     <option disabled selected> Pilih Karyawan </option>
                     @foreach($users as $karyawan)
                       <option value="{{ $karyawan->id_user }}">{{ $karyawan->nama_lengkap }}</option>
@@ -85,6 +85,13 @@
                   />
                 </div>
               </div>
+
+              <div class="mb-3">
+                <label class="form-label" for="formFile">Lampiran File</label>
+                <input class="form-control" type="file" name="file" id="formFile" />
+                <small class="text-muted">Format: PDF, DOCX, JPG, PNG, dll.</small>
+              </div>
+              
               
               <button type="submit" class="btn btn-primary">Send</button>
             </form>
